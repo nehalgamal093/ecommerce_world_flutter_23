@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:world_commerce/presentation/pages/add_product/add_product.dart';
 import 'package:world_commerce/presentation/pages/home/home.dart';
+import 'package:world_commerce/presentation/pages/products_screen/products_screen.dart';
 import 'package:world_commerce/presentation/resources/color_manager.dart';
 
 class Main extends StatefulWidget {
@@ -13,14 +15,8 @@ class _MainState extends State<Main> {
   int _selectedIndex = 0;
   List _pages = [
     Home(),
-    Icon(
-      Icons.camera,
-      size: 150,
-    ),
-    Icon(
-      Icons.chat,
-      size: 150,
-    ),
+    ProductsScreen(),
+    AddProduct(),
     Icon(
       Icons.chat,
       size: 150,
@@ -30,7 +26,7 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title: Text('Ecommerce World'),
+        title:  const  Text('Ecommerce World'),
       ),
       drawer: Drawer(
         child: Padding(
@@ -43,27 +39,27 @@ class _MainState extends State<Main> {
                 child: Column(
                   children: [
                     Image.asset('assets/images/cat.png',width:100,height:100),
-                    Text('Nehal Gamal',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+                    const Text('Nehal Gamal',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
                   ],
                 ),
               ),
-              SizedBox(height:100),
-              ListTile(
+              const SizedBox(height:100),
+              const ListTile(
                 leading: ImageIcon(AssetImage('assets/icons/account.png')),
                 title: Text('Account'),
               ),
-              Divider(),
-               ListTile(
+              const  Divider(),
+              const  ListTile(
                 leading: ImageIcon(AssetImage('assets/icons/setting.png')),
                 title: Text('Setting'),
               ),
-              Divider(),
-               ListTile(
+              const   Divider(),
+              const   ListTile(
                 leading: ImageIcon(AssetImage('assets/icons/wallet.png')),
                 title: Text('Wallet'),
               ),
-              Divider(),
-               ListTile(
+              const   Divider(),
+              const  ListTile(
                 leading: ImageIcon(AssetImage('assets/icons/signout.png')),
                 title: Text('Sign out'),
               ),
@@ -75,7 +71,7 @@ class _MainState extends State<Main> {
         child: _pages.elementAt(_selectedIndex), //New
       ),
       bottomNavigationBar: ClipRRect(
-        borderRadius: BorderRadius.only(
+        borderRadius:  const  BorderRadius.only(
           topRight: Radius.circular(40),
           topLeft: Radius.circular(40),
         ),
@@ -88,8 +84,8 @@ class _MainState extends State<Main> {
             showUnselectedLabels: false,
             unselectedItemColor: Colors.black,
             type: BottomNavigationBarType.fixed,
-            items: [
-              BottomNavigationBarItem(
+            items:  const  [
+                 BottomNavigationBarItem(
                   icon: ImageIcon(AssetImage('assets/icons/store.png')),
                   label: 'Home'),
               BottomNavigationBarItem(

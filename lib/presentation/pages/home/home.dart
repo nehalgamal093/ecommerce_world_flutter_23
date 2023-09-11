@@ -1,5 +1,6 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:world_commerce/presentation/pages/cart_screen/cart_screen.dart';
 import 'package:world_commerce/presentation/pages/custom_product/custom_product.dart';
 import 'package:world_commerce/presentation/pages/product_details/product_details.dart';
 
@@ -49,10 +50,15 @@ class Home extends StatelessWidget {
                 SizedBox(
                   width: 10,
                 ),
-                CircleAvatar(
-                  backgroundColor: ColorManager.lightGrey,
-                  child: Icon(Icons.shopping_cart_outlined,
-                      color: ColorManager.grey),
+                GestureDetector(
+                  onTap: (){
+                    Navigator.push(context, MaterialPageRoute(builder: (context)=>CartScreen()));
+                  },
+                  child: CircleAvatar(
+                    backgroundColor: ColorManager.lightGrey,
+                    child: Icon(Icons.shopping_cart_outlined,
+                        color: ColorManager.grey),
+                  ),
                 ),
                 SizedBox(
                   width: 5,
@@ -164,7 +170,7 @@ class Home extends StatelessWidget {
                         left:20,
                         child: Column(
                           children: [
-                            Text('Fashio',style: TextStyle(fontSize: 25.0,color:Colors.black.withOpacity(.5),fontWeight:FontWeight.bold),),
+                            Text('Fashion',style: TextStyle(fontSize: 25.0,color:Colors.black.withOpacity(.5),fontWeight:FontWeight.bold),),
                               Text('18 Brands',style: TextStyle(fontSize: 20.0,color:Colors.black.withOpacity(.5)),),
                           ],
                         ))
