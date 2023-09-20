@@ -1,7 +1,9 @@
 // import 'dart:io';
 
+import 'dart:io';
+
 import 'package:flutter/material.dart';
-// import 'package:image_picker/image_picker.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:world_commerce/presentation/custom_widgets/form_field.dart';
 import 'package:world_commerce/presentation/resources/color_manager.dart';
 
@@ -36,9 +38,7 @@ class _AddProductState extends State<AddProduct> {
 
   final TextEditingController quantityController = TextEditingController();
 
-  //  File? _imageFile;
-
-  //  File? _image;
+  List<File> selectedImages = []; // List of selected image
 
   @override
   Widget build(BuildContext context) {
@@ -65,7 +65,8 @@ class _AddProductState extends State<AddProduct> {
                 const Icon(Icons.add, color: ColorManager.grey)),
             ElevatedButton(
               onPressed: () {
-                // takePhoto(ImageSource.gallery);
+               takePhoto(ImageSource.gallery);
+               print(selectedImages);
               },
               child: const Text('Upload photos'),
             ),
@@ -108,14 +109,12 @@ class _AddProductState extends State<AddProduct> {
     );
   }
 
-  //  void takePhoto(ImageSource source) async {
-
-  //    final pickedFile = await ImagePicker().pickImage(source: source);
-  //    _imageFile = File(pickedFile!.path);
-
-  //  setState(() {
-  //    _image = _imageFile;
-
-  //  });
-  //  }
+  void takePhoto(ImageSource source) async {
+    final List<XFile> images = await ImagePicker().pickMultiImage();
+    if (images.isNotEmpty) {
+      for (int i = 0; i < images.length; i++) {
+        selectedImages.add(File(images[i].path));
+      }
+    }
+  }
 }

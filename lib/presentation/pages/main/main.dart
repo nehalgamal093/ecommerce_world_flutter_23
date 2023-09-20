@@ -72,7 +72,7 @@ class _MainState extends State<Main> {
                   Navigator.pushReplacement(
                     context,
                     MaterialPageRoute(
-                      builder: (_) => Signin(),
+                      builder: (_) => Signin(isRegisteredSuccess: false,),
                     ),
                   );
                   SharedPreferences preferences =

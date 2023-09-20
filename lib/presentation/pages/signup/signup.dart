@@ -5,7 +5,6 @@ import 'package:world_commerce/presentation/pages/signup/custom_widgets/input_te
 import 'package:world_commerce/presentation/pages/signin/signin.dart';
 import 'package:world_commerce/presentation/resources/color_manager.dart';
 
-
 import '../../../Services/auth_service.dart';
 import '../../resources/strings_manager.dart';
 import '../custom_product/span_text.dart';
@@ -91,17 +90,21 @@ class _SignupState extends State<Signup> {
                 const SizedBox(height: 20),
                 InkWell(
                   onTap: () async {
-                    context.read<SignUpBloc>().add(
-                          SignupEv(email: emailController.text, password: passwordController.text, phone: phoneController.text, username: nameController.text)
-                        );
+                    context.read<SignUpBloc>().add(SignupEv(
+                        email: emailController.text,
+                        password: passwordController.text,
+                        phone: phoneController.text,
+                        username: nameController.text));
                     // await SingUpRepo().singUp(emailController.text, passwordController.text, phoneController.text, nameController.text);
                   },
                   child: BlocListener<SignUpBloc, SignUpState>(
                     listener: (context, state) {
-                    if (state.loadingStatus == SignUpStatus.loaded) {
+                      if (state.loadingStatus == SignUpStatus.loaded) {
                         Navigator.of(context).pushReplacement(
                           MaterialPageRoute(
-                            builder: (_) =>  Signin(),
+                            builder: (_) => Signin(
+                              isRegisteredSuccess: true,
+                            ),
                           ),
                         );
                       } else if (state.loadingStatus == SignUpStatus.error) {
@@ -122,16 +125,17 @@ class _SignupState extends State<Signup> {
                       decoration: const BoxDecoration(
                           color: ColorManager.blue,
                           borderRadius: BorderRadius.all(Radius.circular(10))),
-                      child:  Center(
-                        child: context.watch<SignUpBloc>().state.loadingStatus ==
-                                SignUpStatus.loading
-                            ? const CircularProgressIndicator(
-                                color: Colors.white,
-                              )
-                            : const Text(
-                          StringsManager.signup,
-                          style: TextStyle(color: Colors.white),
-                        ),
+                      child: Center(
+                        child:
+                            context.watch<SignUpBloc>().state.loadingStatus ==
+                                    SignUpStatus.loading
+                                ? const CircularProgressIndicator(
+                                    color: Colors.white,
+                                  )
+                                : const Text(
+                                    StringsManager.signup,
+                                    style: TextStyle(color: Colors.white),
+                                  ),
                       ),
                     ),
                   ),
@@ -148,7 +152,12 @@ class _SignupState extends State<Signup> {
                     InkWell(
                       onTap: () {
                         Navigator.of(context).push(
-                            MaterialPageRoute(builder: (context) => Signin()));
+                          MaterialPageRoute(
+                            builder: (context) => Signin(
+                              isRegisteredSuccess: false,
+                            ),
+                          ),
+                        );
                       },
                       child: const Text(
                         StringsManager.signin,

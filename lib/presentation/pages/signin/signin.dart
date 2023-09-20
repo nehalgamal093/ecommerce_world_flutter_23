@@ -1,22 +1,20 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:shared_preferences/shared_preferences.dart';
-// import 'package:shared_preferences/shared_preferences.dart';
 import 'package:world_commerce/Services/auth_service.dart';
 import 'package:world_commerce/bloc/save_login/save_login_bloc.dart';
-
-// import 'package:world_commerce/bloc/bloc/login_bloc.dart';
+import 'package:world_commerce/presentation/pages/forget_password/forget_password.dart';
 import 'package:world_commerce/presentation/pages/signup/custom_widgets/input_text.dart';
 import 'package:world_commerce/presentation/pages/signup/signup.dart';
 import 'package:world_commerce/presentation/resources/color_manager.dart';
 import '../../../bloc/login_bloc/login_bloc.dart';
-
 import '../../resources/strings_manager.dart';
 import '../custom_product/span_text.dart';
 import '../main/main.dart';
 
 class Signin extends StatelessWidget {
-  Signin({super.key});
+  final bool isRegisteredSuccess;
+  Signin({super.key, this.isRegisteredSuccess = false});
   final TextEditingController emailController = TextEditingController();
   final TextEditingController passwordController = TextEditingController();
   @override
@@ -36,20 +34,37 @@ class Signin extends StatelessWidget {
               mainAxisAlignment: MainAxisAlignment.center,
               crossAxisAlignment: CrossAxisAlignment.center,
               children: [
-                const Row(
+                Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     //forget password leading to forget password page
 
-                    Text(
-                      StringsManager.forgotPassword,
-                      style: TextStyle(
-                          color: ColorManager.grey,
-                          decoration: TextDecoration.underline),
+                    InkWell(
+                      onTap: () {
+                        Navigator.push(
+                          context,
+                          MaterialPageRoute(
+                            builder: (_) => ForgetPassword(),
+                          ),
+                        );
+                      },
+                      child: const Text(
+                        StringsManager.forgotPassword,
+                        style: TextStyle(
+                            color: ColorManager.grey,
+                            decoration: TextDecoration.underline),
+                      ),
                     ),
                   ],
                 ),
-                const SizedBox(height: 100),
+                const SizedBox(height: 50),
+                isRegisteredSuccess
+                    ? const Text(
+                        'You Signed up Successfully! Now Sign in',
+                        style: TextStyle(color: Colors.green, fontSize: 17),
+                      )
+                    : Container(),
+                const SizedBox(height: 50),
                 //Welcome title
                 const Text(
                   StringsManager.welcome,
