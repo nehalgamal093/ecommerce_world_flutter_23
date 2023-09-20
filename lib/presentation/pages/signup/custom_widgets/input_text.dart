@@ -60,7 +60,7 @@ class InputText extends StatelessWidget {
             ),
           ),
         ),
-        const SizedBox(height: 10.0)
+        const SizedBox(height: 5.0)
       ],
     );
   }

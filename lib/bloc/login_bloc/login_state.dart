@@ -1,7 +1,7 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 part of 'login_bloc.dart';
 
-enum LoginStatus { initial, loading, loaded, error,notLoading }
+enum LoginStatus { initial, loading, loaded, error }
 
 class LoginState extends Equatable {
   final LoginStatus loadingStatus;

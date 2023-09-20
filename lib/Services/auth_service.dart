@@ -32,6 +32,7 @@ class AuthService {
         errMsg = result['error'];
         throw LoadingException('Something went wrong');
       }
+      // print(result);
       return result;
     } catch (e) {
       rethrow;

@@ -7,11 +7,12 @@ import 'package:world_commerce/bloc/save_login/save_login_bloc.dart';
 
 // import 'package:world_commerce/bloc/bloc/login_bloc.dart';
 import 'package:world_commerce/presentation/pages/signup/custom_widgets/input_text.dart';
+import 'package:world_commerce/presentation/pages/signup/signup.dart';
 import 'package:world_commerce/presentation/resources/color_manager.dart';
 import '../../../bloc/login_bloc/login_bloc.dart';
 
 import '../../resources/strings_manager.dart';
-import '../custom_product/terms_conditions.dart';
+import '../custom_product/span_text.dart';
 import '../main/main.dart';
 
 class Signin extends StatelessWidget {
@@ -39,6 +40,7 @@ class Signin extends StatelessWidget {
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     //forget password leading to forget password page
+
                     Text(
                       StringsManager.forgotPassword,
                       style: TextStyle(
@@ -47,7 +49,7 @@ class Signin extends StatelessWidget {
                     ),
                   ],
                 ),
-                const SizedBox(height: 30),
+                const SizedBox(height: 100),
                 //Welcome title
                 const Text(
                   StringsManager.welcome,
@@ -121,7 +123,9 @@ class Signin extends StatelessWidget {
                     listener: (context, state) {
                       if (state.loadingStatus == LoginStatus.loaded) {
                         Navigator.of(context).pushReplacement(
-                          MaterialPageRoute(builder: (_) => const Main()),
+                          MaterialPageRoute(
+                            builder: (_) => const Main(),
+                          ),
                         );
                       } else if (state.loadingStatus == LoginStatus.error) {
                         ScaffoldMessenger.of(context).showSnackBar(
@@ -138,7 +142,7 @@ class Signin extends StatelessWidget {
                     // if there is an error the loading will stop and show snackbar with error message
                     child: Container(
                       padding: const EdgeInsets.all(4),
-                      width: MediaQuery.of(context).size.width * .80,
+                      width: width * .80,
                       height: 45,
                       decoration: const BoxDecoration(
                         color: ColorManager.blue,
@@ -160,9 +164,20 @@ class Signin extends StatelessWidget {
                     ),
                   ),
                 ),
-                const SizedBox(height: 20),
+                const SizedBox(height: 50),
                 //Terms and conditions to read before logging in
-                termsAndConditions(context)
+
+                InkWell(
+                  onTap: () {
+                    Navigator.of(context).push(
+                      MaterialPageRoute(
+                        builder: (context) => const Signup(),
+                      ),
+                    );
+                  },
+                  child: spanText(context, 'Don\'t Have an Account? ',
+                      'Sign Up', ColorManager.black, ColorManager.blue),
+                ),
               ],
             ),
           ),
@@ -170,6 +185,4 @@ class Signin extends StatelessWidget {
       ),
     );
   }
-
-  saveLogin() async {}
 }
