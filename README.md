@@ -1,16 +1,22 @@
-# world_commerce
+# world_commerce 🛒 
 
-A new Flutter project.
 
-## What is this project?
+## What is this project? 
 
-This project is an E-Commerce App Using Flutter Bloc and Node Js as backend
+This project is an E-Commerce App Using Flutter Bloc and Node Js as backend 🚀  
 
-A few resources to get you started if this is your first Flutter project:
+This project will show my Experience in Flutter & Flutter Bloc 💻
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+🌱 This is Not the final Project as I will update it by time to make the best use of my Experience So Consider it as a Seed that will grow 🌱
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Package used in this project
+* Flutter Bloc
+* Shared Preferences
+* Dot Env
+* Http
+* Image Picker
+
+
+![Flutter Bloc](https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcS5iqyIUYKWYXXZsvYHfsK16bkeNvEtCq_XFQ&usqp=CAU)
+
+

@@ -1,11 +1,14 @@
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:world_commerce/presentation/pages/add_product/add_product.dart';
 import 'package:world_commerce/presentation/pages/home/home.dart';
 import 'package:world_commerce/presentation/pages/products_screen/products_screen.dart';
 import 'package:world_commerce/presentation/resources/color_manager.dart';
 
+import '../signin/signin.dart';
+
 class Main extends StatefulWidget {
- const Main({super.key});
+  const Main({super.key});
 
   @override
   State<Main> createState() => _MainState();
@@ -13,11 +16,11 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   int _selectedIndex = 0;
- final  List _pages = [
-     Home(),
-   const ProductsScreen(),
-   const AddProduct(),
-   const Icon(
+  final List _pages = [
+    Home(),
+    const ProductsScreen(),
+    const AddProduct(),
+    const Icon(
       Icons.chat,
       size: 150,
     ),
@@ -26,7 +29,7 @@ class _MainState extends State<Main> {
   Widget build(BuildContext context) {
     return Scaffold(
       appBar: AppBar(
-        title:  const  Text('Ecommerce World'),
+        title: const Text('Ecommerce World'),
       ),
       drawer: Drawer(
         child: Padding(
@@ -38,30 +41,50 @@ class _MainState extends State<Main> {
               Center(
                 child: Column(
                   children: [
-                    Image.asset('assets/images/cat.png',width:100,height:100),
-                    const Text('Nehal Gamal',style: TextStyle(fontSize: 20,fontWeight: FontWeight.bold),)
+                    Image.asset('assets/images/cat.png',
+                        width: 100, height: 100),
+                    const Text(
+                      'Nehal Gamal',
+                      style:
+                          TextStyle(fontSize: 20, fontWeight: FontWeight.bold),
+                    )
                   ],
                 ),
               ),
-              const SizedBox(height:100),
+              const SizedBox(height: 100),
               const ListTile(
                 leading: ImageIcon(AssetImage('assets/icons/account.png')),
                 title: Text('Account'),
               ),
-              const  Divider(),
-              const  ListTile(
+              const Divider(),
+              const ListTile(
                 leading: ImageIcon(AssetImage('assets/icons/setting.png')),
                 title: Text('Setting'),
               ),
-              const   Divider(),
-              const   ListTile(
+              const Divider(),
+              const ListTile(
                 leading: ImageIcon(AssetImage('assets/icons/wallet.png')),
                 title: Text('Wallet'),
               ),
-              const   Divider(),
-              const  ListTile(
-                leading: ImageIcon(AssetImage('assets/icons/signout.png')),
-                title: Text('Sign out'),
+              const Divider(),
+              InkWell(
+                onTap: () async {
+                  Navigator.pushReplacement(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => Signin(),
+                    ),
+                  );
+                  SharedPreferences preferences =
+                      await SharedPreferences.getInstance();
+                  await preferences.clear();
+                },
+                child: const ListTile(
+                  leading: ImageIcon(
+                    AssetImage('assets/icons/signout.png'),
+                  ),
+                  title: Text('Sign out'),
+                ),
               ),
             ],
           ),
@@ -71,7 +94,7 @@ class _MainState extends State<Main> {
         child: _pages.elementAt(_selectedIndex), //New
       ),
       bottomNavigationBar: ClipRRect(
-        borderRadius:  const  BorderRadius.only(
+        borderRadius: const BorderRadius.only(
           topRight: Radius.circular(40),
           topLeft: Radius.circular(40),
         ),
@@ -84,8 +107,8 @@ class _MainState extends State<Main> {
             showUnselectedLabels: false,
             unselectedItemColor: Colors.black,
             type: BottomNavigationBarType.fixed,
-            items:  const  [
-                 BottomNavigationBarItem(
+            items: const [
+              BottomNavigationBarItem(
                   icon: ImageIcon(AssetImage('assets/icons/store.png')),
                   label: 'Home'),
               BottomNavigationBarItem(
