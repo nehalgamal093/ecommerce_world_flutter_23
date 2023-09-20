@@ -5,7 +5,7 @@ import 'package:world_commerce/presentation/pages/products_screen/products_scree
 import 'package:world_commerce/presentation/resources/color_manager.dart';
 
 class Main extends StatefulWidget {
-  Main({super.key});
+ const Main({super.key});
 
   @override
   State<Main> createState() => _MainState();
@@ -13,11 +13,11 @@ class Main extends StatefulWidget {
 
 class _MainState extends State<Main> {
   int _selectedIndex = 0;
-  List _pages = [
-    Home(),
-    ProductsScreen(),
-    AddProduct(),
-    Icon(
+ final  List _pages = [
+     Home(),
+   const ProductsScreen(),
+   const AddProduct(),
+   const Icon(
       Icons.chat,
       size: 150,
     ),

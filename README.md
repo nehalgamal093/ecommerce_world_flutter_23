@@ -2,9 +2,9 @@
 
 A new Flutter project.
 
-## Getting Started
+## What is this project?
 
-This project is a starting point for a Flutter application.
+This project is an E-Commerce App Using Flutter Bloc and Node Js as backend
 
 A few resources to get you started if this is your first Flutter project:
 

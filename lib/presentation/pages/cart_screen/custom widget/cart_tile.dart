@@ -25,7 +25,7 @@ class CartTile extends StatelessWidget {
             height: 120,
             decoration: BoxDecoration(
                 color: Colors.red[50],
-                borderRadius: BorderRadius.all(Radius.circular(50))),
+                borderRadius: const BorderRadius.all(Radius.circular(50))),
             child:
             Image.asset('assets/images/iphone.png', fit: BoxFit.cover),
           ),

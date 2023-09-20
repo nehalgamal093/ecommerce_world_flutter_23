@@ -1,20 +1,35 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+// import 'package:shared_preferences/shared_preferences.dart';
+import 'package:world_commerce/Services/auth_service.dart';
+import 'package:world_commerce/bloc/save_login/save_login_bloc.dart';
+
+// import 'package:world_commerce/bloc/bloc/login_bloc.dart';
 import 'package:world_commerce/presentation/pages/signup/custom_widgets/input_text.dart';
 import 'package:world_commerce/presentation/resources/color_manager.dart';
+import '../../../bloc/login_bloc/login_bloc.dart';
 
 import '../../resources/strings_manager.dart';
+import '../custom_product/terms_conditions.dart';
+import '../main/main.dart';
 
 class Signin extends StatelessWidget {
-  const Signin({super.key});
-
+  Signin({super.key});
+  final TextEditingController emailController = TextEditingController();
+  final TextEditingController passwordController = TextEditingController();
   @override
   Widget build(BuildContext context) {
+    double width = MediaQuery.of(context).size.width;
+    double height = MediaQuery.of(context).size.height;
     return SafeArea(
       child: Scaffold(
+        //Starting page
+
         body: SingleChildScrollView(
           child: Container(
-            width: MediaQuery.of(context).size.width,
-            height: MediaQuery.of(context).size.height,
+            width: width,
+            height: height,
             margin: const EdgeInsets.all(12),
             child: Column(
               mainAxisAlignment: MainAxisAlignment.center,
@@ -23,6 +38,7 @@ class Signin extends StatelessWidget {
                 const Row(
                   mainAxisAlignment: MainAxisAlignment.end,
                   children: [
+                    //forget password leading to forget password page
                     Text(
                       StringsManager.forgotPassword,
                       style: TextStyle(
@@ -32,6 +48,7 @@ class Signin extends StatelessWidget {
                   ],
                 ),
                 const SizedBox(height: 30),
+                //Welcome title
                 const Text(
                   StringsManager.welcome,
                   style: TextStyle(
@@ -44,18 +61,22 @@ class Signin extends StatelessWidget {
                   style: TextStyle(color: ColorManager.grey, fontSize: 15),
                 ),
                 const SizedBox(height: 20),
-                const InputText(
-                  labelText: StringsManager.username,
+                //starting form email and password
+                InputText(
+                  controller: emailController,
+                  labelText: StringsManager.email,
                   icon: Icons.person_outline,
                   hintText: 'nehalgamal',
                   isPassword: false,
                 ),
-                const InputText(
+                InputText(
+                  controller: passwordController,
                   labelText: StringsManager.password,
                   icon: Icons.lock_outline,
                   hintText: '•••••••',
                   isPassword: true,
                 ),
+                //Remember me switch button
                 Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
@@ -68,45 +89,80 @@ class Signin extends StatelessWidget {
                     ),
                     Switch(
                         activeTrackColor: ColorManager.green,
-                        value: true,
-                        onChanged: (val) {}),
+                        value: context
+                                .watch<SaveLoginBloc>()
+                                .state
+                                .saveLoginStatus ==
+                            SaveLoginStatus.save,
+                        onChanged: (val) {
+                          context.read<SaveLoginBloc>().add(SaveEvent());
+                        }),
                   ],
                 ),
                 const SizedBox(height: 20),
-                Container(
-                  padding: const EdgeInsets.all(4),
-                  width: MediaQuery.of(context).size.width * .80,
-                  height: 45,
-                  decoration: const BoxDecoration(
-                      color: ColorManager.blue,
-                      borderRadius: BorderRadius.all(Radius.circular(10))),
-                  child: const Center(
-                    child: Text(
-                      StringsManager.login,
-                      style: TextStyle(color: Colors.white),
+                //Button for logging and accessing the home page if email & password are right
+                // If Email and password not write it will show you snackbar with error message
+                InkWell(
+                  onTap: () async {
+                    context.read<LoginBloc>().add(
+                          Login(
+                              email: emailController.text,
+                              password: passwordController.text),
+                        );
+                    final saveStatus =
+                        context.read<SaveLoginBloc>().state.saveLoginStatus;
+                    if (saveStatus == SaveLoginStatus.save) {
+                      SharedPreferences prefs =
+                          await SharedPreferences.getInstance();
+                      prefs.setString("email", emailController.text);
+                    }
+                  },
+                  child: BlocListener<LoginBloc, LoginState>(
+                    listener: (context, state) {
+                      if (state.loadingStatus == LoginStatus.loaded) {
+                        Navigator.of(context).pushReplacement(
+                          MaterialPageRoute(builder: (_) => const Main()),
+                        );
+                      } else if (state.loadingStatus == LoginStatus.error) {
+                        ScaffoldMessenger.of(context).showSnackBar(
+                          SnackBar(
+                            content: Text(
+                              AuthService.errMsg,
+                              style: const TextStyle(color: Colors.white),
+                            ),
+                          ),
+                        );
+                      }
+                    },
+                    //Button loading when waiting the request
+                    // if there is an error the loading will stop and show snackbar with error message
+                    child: Container(
+                      padding: const EdgeInsets.all(4),
+                      width: MediaQuery.of(context).size.width * .80,
+                      height: 45,
+                      decoration: const BoxDecoration(
+                        color: ColorManager.blue,
+                        borderRadius: BorderRadius.all(
+                          Radius.circular(10),
+                        ),
+                      ),
+                      child: Center(
+                        child: context.watch<LoginBloc>().state.loadingStatus ==
+                                LoginStatus.loading
+                            ? const CircularProgressIndicator(
+                                color: Colors.white,
+                              )
+                            : const Text(
+                                StringsManager.login,
+                                style: TextStyle(color: Colors.white),
+                              ),
+                      ),
                     ),
                   ),
                 ),
                 const SizedBox(height: 20),
-                Container(
-                  width: MediaQuery.of(context).size.width * .6,
-                  child: RichText(
-                    text: const TextSpan(
-                      text: StringsManager.byConnectingYouAgree,
-                      style: TextStyle(
-                          color: ColorManager.grey, fontSize: 14, height: 1.3),
-                      children: <TextSpan>[
-                        TextSpan(
-                          text: ' ' + StringsManager.termsAndCondition,
-                          style: TextStyle(
-                              color: ColorManager.black,
-                              fontSize: 14,
-                              fontWeight: FontWeight.bold),
-                        ),
-                      ],
-                    ),
-                  ),
-                ),
+                //Terms and conditions to read before logging in
+                termsAndConditions(context)
               ],
             ),
           ),
@@ -114,4 +170,6 @@ class Signin extends StatelessWidget {
       ),
     );
   }
+
+  saveLogin() async {}
 }

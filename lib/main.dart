@@ -1,30 +1,40 @@
 import 'package:flutter/material.dart';
-import 'package:world_commerce/presentation/pages/cart_screen/cart_screen.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:world_commerce/bloc/save_login/save_login_bloc.dart';
+import 'package:flutter_dotenv/flutter_dotenv.dart';
 import 'package:world_commerce/presentation/pages/main/main.dart';
+import 'package:world_commerce/presentation/pages/signin/signin.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:world_commerce/repository/login_repo.dart';
 
+import 'bloc/login_bloc/login_bloc.dart';
 
-
-
-void main() {
-  runApp(const MyApp());
-}
-
-class MyApp extends StatelessWidget {
-  const MyApp({super.key});
-
-  // This widget is the root of your application.
-  @override
-  Widget build(BuildContext context) {
-    return MaterialApp(
-      title: 'Flutter Demo',
-      debugShowCheckedModeBanner: false,
-      theme: ThemeData(
-   
-        colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
-        useMaterial3: true,
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  dotenv.load(fileName: '.env');
+  SharedPreferences prefs = await SharedPreferences.getInstance();
+  var email = prefs.getString("email");
+  runApp(
+    MultiBlocProvider(
+      providers: [
+        BlocProvider(
+          create: (_) => LoginBloc(
+            loginRepo: LoginRepo(),
+          ),
+        ),
+        BlocProvider(
+          create: (_) => SaveLoginBloc(),
+        )
+      ],
+      child: MaterialApp(
+        title: 'Flutter Demo',
+        debugShowCheckedModeBanner: false,
+        theme: ThemeData(
+          colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
+          useMaterial3: true,
+        ),
+        home: email == null ? Signin() : const Main(),
       ),
-      home:Main()
-    );
-  }
+    ),
+  );
 }
-
