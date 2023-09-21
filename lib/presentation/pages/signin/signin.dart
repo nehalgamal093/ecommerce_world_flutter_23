@@ -129,9 +129,11 @@ class Signin extends StatelessWidget {
                     final saveStatus =
                         context.read<SaveLoginBloc>().state.saveLoginStatus;
                     if (saveStatus == SaveLoginStatus.save) {
-                      SharedPreferences prefs =
+                      if(emailController.text.isNotEmpty){
+                        SharedPreferences prefs =
                           await SharedPreferences.getInstance();
                       prefs.setString("email", emailController.text);
+                      }
                     }
                   },
                   child: BlocListener<LoginBloc, LoginState>(

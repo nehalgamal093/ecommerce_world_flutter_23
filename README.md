@@ -1,4 +1,4 @@
-# world_commerce 🛒 
+# World Ecommerce 🛒 
 
 
 ## What is this project? 

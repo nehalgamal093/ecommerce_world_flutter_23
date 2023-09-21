@@ -7,6 +7,8 @@ import 'package:image_picker/image_picker.dart';
 import 'package:world_commerce/presentation/custom_widgets/form_field.dart';
 import 'package:world_commerce/presentation/resources/color_manager.dart';
 
+import '../../../repository/add_product.dart';
+
 class AddProduct extends StatefulWidget {
   const AddProduct({super.key});
 
@@ -15,28 +17,28 @@ class AddProduct extends StatefulWidget {
 }
 
 class _AddProductState extends State<AddProduct> {
-  final TextEditingController nameController = TextEditingController();
+  final TextEditingController nameController = TextEditingController(text:'Nokia x');
 
-  final TextEditingController descriptionController = TextEditingController();
+  final TextEditingController descriptionController = TextEditingController(text:'this is description after upload');
 
-  final TextEditingController priceController = TextEditingController();
+  final TextEditingController priceController = TextEditingController(text:'100');
 
   final TextEditingController photosController = TextEditingController();
 
   final TextEditingController priceAfterDiscountController =
-      TextEditingController();
+      TextEditingController(text:'10');
 
-  final TextEditingController categoryController = TextEditingController();
+  final TextEditingController categoryController = TextEditingController(text: '64b7d9979f685a9cdff59a0b');
+  final TextEditingController soldController = TextEditingController(text:'1');
+  final TextEditingController subCategoryController = TextEditingController(text:"64b809c2138e0e8781b28392");
 
-  final TextEditingController subCategoryController = TextEditingController();
+  final TextEditingController ratingAvgController = TextEditingController(text:'2');
 
-  final TextEditingController ratingAvgController = TextEditingController();
+  final TextEditingController ratingCountController = TextEditingController(text:'2');
 
-  final TextEditingController ratingCountController = TextEditingController();
+  final TextEditingController brandController = TextEditingController(text:'64bb9e4cac77717c27d742ef');
 
-  final TextEditingController brandController = TextEditingController();
-
-  final TextEditingController quantityController = TextEditingController();
+  final TextEditingController quantityController = TextEditingController(text:'100');
 
   List<File> selectedImages = []; // List of selected image
 
@@ -65,42 +67,73 @@ class _AddProductState extends State<AddProduct> {
                 const Icon(Icons.add, color: ColorManager.grey)),
             ElevatedButton(
               onPressed: () {
-               takePhoto(ImageSource.gallery);
-               print(selectedImages);
+                takePhoto(ImageSource.gallery);
+                print('this is Images $selectedImages');
               },
               child: const Text('Upload photos'),
             ),
-            InkWell(
-                onTap: () {
-                  // takePhoto(ImageSource.gallery);
-                },
-                child: formField(
-                    context,
-                    'Photos',
-                    photosController,
-                    const Icon(Icons.camera_alt_outlined,
-                        color: ColorManager.grey))),
-            formField(context, 'Rating Avg', priceAfterDiscountController,
-                const Icon(Icons.add, color: ColorManager.grey)),
-            formField(context, 'Rating Count', categoryController,
-                const Icon(Icons.add, color: ColorManager.grey)),
-            formField(context, 'Brand', subCategoryController,
-                const Icon(Icons.add, color: ColorManager.grey)),
-            formField(context, 'Quantity', photosController,
-                const Icon(Icons.add, color: ColorManager.grey)),
+     
+            formField(
+              context,
+              'Rating Avg',
+              ratingAvgController,
+              const Icon(Icons.add, color: ColorManager.grey),
+            ),
+            formField(
+              context,
+              'Rating Count',
+              ratingCountController,
+              const Icon(Icons.add, color: ColorManager.grey),
+            ),
+            formField(
+              context,
+              'Brand',
+              brandController,
+              const Icon(Icons.add, color: ColorManager.grey),
+            ),
+            formField(
+              context,
+              'Quantity',
+              quantityController,
+              const Icon(Icons.add, color: ColorManager.grey),
+            ),
+             formField(
+              context,
+              'Sold',
+              soldController,
+              const Icon(Icons.add, color: ColorManager.grey),
+            ),
           ],
         ),
-        bottomNavigationBar: const ClipRRect(
-          borderRadius: BorderRadius.only(
-            topRight: Radius.circular(40),
-            topLeft: Radius.circular(40),
-          ),
-          child: BottomAppBar(
-            color: ColorManager.green,
-            child: Center(
-              child: Text(
-                'Add Product',
-                style: TextStyle(fontSize: 20, color: Colors.white),
+        bottomNavigationBar: InkWell(
+          onTap: () {
+        
+            AddProductRepo().addProduct(
+                nameController.text,
+                descriptionController.text,
+                int.parse(priceController.text),
+                int.parse(priceAfterDiscountController.text),
+                int.parse(ratingAvgController.text),
+                int.parse(quantityController.text),
+                int.parse(ratingCountController.text),
+                int.parse(soldController.text),
+                categoryController.text,
+                subCategoryController.text,
+                brandController.text,
+                selectedImages);
+          },
+          child: const ClipRRect(
+            borderRadius: BorderRadius.only(
+              topRight: Radius.circular(40),
+              topLeft: Radius.circular(40),
+            ),
+            child: BottomAppBar(
+              color: ColorManager.green,
+              child: Center(
+                child: Text(
+                  'Add Product',
+                  style: TextStyle(fontSize: 20, color: Colors.white),
+                ),
               ),
             ),
           ),

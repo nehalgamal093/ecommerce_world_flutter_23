@@ -16,6 +16,7 @@ Future<void> main() async {
   dotenv.load(fileName: '.env');
   SharedPreferences prefs = await SharedPreferences.getInstance();
   var email = prefs.getString("email");
+
   runApp(
     MultiBlocProvider(
       providers: [
