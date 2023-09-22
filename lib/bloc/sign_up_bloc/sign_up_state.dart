@@ -1,11 +1,11 @@
 part of 'sign_up_bloc.dart';
 
-
 enum SignUpStatus { initial, loading, loaded, error }
+
 class SignUpState extends Equatable {
   final SignUpStatus loadingStatus;
 
- const SignUpState({
+  const SignUpState({
     required this.loadingStatus,
   });
 

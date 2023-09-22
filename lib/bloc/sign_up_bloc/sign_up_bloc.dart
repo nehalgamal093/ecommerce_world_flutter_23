@@ -14,14 +14,14 @@ class SignUpBloc extends Bloc<SignUpEvent, SignUpState> {
     on<SignupEv>(_signUpReq);
   }
 
-   FutureOr<void> _signUpReq(SignupEv event, Emitter<SignUpState> emit) async {
+  FutureOr<void> _signUpReq(SignupEv event, Emitter<SignUpState> emit) async {
     emit(state.copyWith(loadingStatus: SignUpStatus.loading));
     try {
-     await singUpRepo.singUp(event.email, event.password,event.phone,event.username);
+      await singUpRepo.singUp(
+          event.email, event.password, event.phone, event.username);
       emit(state.copyWith(loadingStatus: SignUpStatus.loaded));
-    }  catch (e) {
+    } catch (e) {
       emit(state.copyWith(loadingStatus: SignUpStatus.error));
     }
-
   }
 }

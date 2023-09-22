@@ -77,7 +77,8 @@ class _MainState extends State<Main> {
                   );
                   SharedPreferences preferences =
                       await SharedPreferences.getInstance();
-                  await preferences.clear();
+                       preferences.remove('token');
+                        preferences.remove('saveLogin');
                 },
                 child: const ListTile(
                   leading: ImageIcon(

@@ -13,6 +13,5 @@ class Login extends LoginEvent {
     required this.password,
   });
 
-  
   List<Object?> get props => [email, password];
 }

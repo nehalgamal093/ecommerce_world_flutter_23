@@ -5,11 +5,10 @@ import 'http_error_handler.dart';
 
 class AddService {
   static String errMsg = '';
-  Future<void> addService(dynamic body, String url,dynamic headers) async {
+  Future<void> addService(dynamic body, String url, dynamic headers) async {
     try {
       final response = await http.post(Uri.parse(url),
-          headers:headers,
-          body: jsonEncode(body));
+          headers: headers, body: jsonEncode(body));
       final result = jsonDecode(utf8.decode(response.bodyBytes));
       print('===The Result is $result');
       if (response.statusCode != 200) {

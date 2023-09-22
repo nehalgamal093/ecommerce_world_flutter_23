@@ -15,8 +15,9 @@ Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
   dotenv.load(fileName: '.env');
   SharedPreferences prefs = await SharedPreferences.getInstance();
-  var email = prefs.getString("email");
-
+  var token = prefs.getString("token");
+  print('tokeeens is ${token}');
+// print('email is ${email}');
   runApp(
     MultiBlocProvider(
       providers: [
@@ -41,7 +42,7 @@ Future<void> main() async {
           colorScheme: ColorScheme.fromSeed(seedColor: Colors.deepPurple),
           useMaterial3: true,
         ),
-        home: email == null ? Signin() : const Main(),
+        home: token == null ? Signin() : const Main(),
       ),
     ),
   );

@@ -1,11 +1,13 @@
 import 'dart:convert';
 import 'package:http/http.dart' as http;
+import 'package:shared_preferences/shared_preferences.dart';
 import 'package:world_commerce/exception/loading_exception.dart';
 import 'http_error_handler.dart';
 
 class AuthService {
-  static String token = '';
-  static String errMsg = '';
+  static String? token;
+  static String? errMsg;
+
   Future<void> authPost(dynamic body, String url) async {
     try {
       final response = await http.post(Uri.parse(url),
@@ -22,8 +24,12 @@ class AuthService {
 
       if (result['token'] != null) {
         token = result['token'];
-         print(errMsg);
-         print('token is $token');
+        SharedPreferences prefs = await SharedPreferences.getInstance();
+        var saveLogin = prefs.getBool('saveLogin') ?? false;
+        if (saveLogin) {
+          prefs.setString("token", token!);
+        }
+        print('token is $token');
       } else {
         null;
       }

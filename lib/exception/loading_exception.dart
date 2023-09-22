@@ -1,12 +1,11 @@
-class LoadingException implements Exception{
+class LoadingException implements Exception {
   String message;
-  LoadingException([this.message = 'Something went wrong']){
+  LoadingException([this.message = 'Something went wrong']) {
     message = 'Loading Exception: $message';
   }
 
-@override
+  @override
   String toString() {
-   return message;
+    return message;
   }
-
 }

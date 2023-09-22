@@ -111,7 +111,7 @@ class _SignupState extends State<Signup> {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              AuthService.errMsg,
+                              AuthService.errMsg!,
                               style: const TextStyle(color: Colors.white),
                             ),
                           ),

@@ -7,6 +7,4 @@ sealed class SaveLoginEvent extends Equatable {
   List<Object> get props => [];
 }
 
-class SaveEvent extends SaveLoginEvent{
-  
-}
+class SaveEvent extends SaveLoginEvent {}

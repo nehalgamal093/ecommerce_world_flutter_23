@@ -1,13 +1,22 @@
 // ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:flutter/material.dart';
+import 'package:shared_preferences/shared_preferences.dart';
+import 'package:world_commerce/Services/auth_service.dart';
 import 'package:world_commerce/presentation/pages/cart_screen/cart_screen.dart';
 import 'package:world_commerce/presentation/pages/custom_product/custom_product.dart';
 import 'package:world_commerce/presentation/pages/product_details/product_details.dart';
 
+import '../../../repository/login_repo.dart';
 import '../../resources/color_manager.dart';
 
-class Home extends StatelessWidget {
+class Home extends StatefulWidget {
   Home({super.key});
+
+  @override
+  State<Home> createState() => _HomeState();
+}
+
+class _HomeState extends State<Home> {
   final List<Categories> list = [
     Categories(title: 'Electronics', icon: Icons.tv_outlined),
     Categories(title: 'Fashion', icon: Icons.ad_units),
@@ -16,6 +25,17 @@ class Home extends StatelessWidget {
     Categories(title: 'Beauty', icon: Icons.beach_access),
     Categories(title: 'Electronics', icon: Icons.tv_outlined),
   ];
+  Future<void> getToken() async{
+   SharedPreferences prefs = await SharedPreferences.getInstance();
+  var token = prefs.getString("token");
+    print('from home token $token');
+  }
+@override
+  void initState() {
+
+    super.initState();
+    getToken();
+  }
   @override
   Widget build(BuildContext context) {
     return SafeArea(

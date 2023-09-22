@@ -14,7 +14,7 @@ class SignupEv extends SignUpEvent {
   final String phone;
   final String username;
 
- const  SignupEv({
+  const SignupEv({
     required this.email,
     required this.password,
     required this.phone,
@@ -22,6 +22,5 @@ class SignupEv extends SignUpEvent {
   });
 
   @override
-  List<Object> get props => [email,password,phone,username];
+  List<Object> get props => [email, password, phone, username];
 }
-

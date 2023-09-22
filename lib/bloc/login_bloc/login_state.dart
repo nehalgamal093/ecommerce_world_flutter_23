@@ -6,7 +6,7 @@ enum LoginStatus { initial, loading, loaded, error }
 class LoginState extends Equatable {
   final LoginStatus loadingStatus;
 
- const LoginState({
+  const LoginState({
     required this.loadingStatus,
   });
 

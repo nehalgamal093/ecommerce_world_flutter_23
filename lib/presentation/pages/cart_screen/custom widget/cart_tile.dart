@@ -26,8 +26,7 @@ class CartTile extends StatelessWidget {
             decoration: BoxDecoration(
                 color: Colors.red[50],
                 borderRadius: const BorderRadius.all(Radius.circular(50))),
-            child:
-            Image.asset('assets/images/iphone.png', fit: BoxFit.cover),
+            child: Image.asset('assets/images/iphone.png', fit: BoxFit.cover),
           ),
           const SizedBox(
             width: 10,
@@ -50,11 +49,11 @@ class CartTile extends StatelessWidget {
             mainAxisAlignment: MainAxisAlignment.center,
             children: [
               Text('-'),
-               SizedBox(
+              SizedBox(
                 height: 10,
               ),
               Text('1'),
-               SizedBox(
+              SizedBox(
                 height: 10,
               ),
               CircleAvatar(

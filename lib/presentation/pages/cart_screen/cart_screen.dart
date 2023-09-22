@@ -10,19 +10,14 @@ class CartScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     return SafeArea(
       child: Scaffold(
-        appBar: topBar('My Cart'),
-        body:Container(
-          padding: const EdgeInsets.all(10),
-          child: ListView(
-            shrinkWrap: true,
-            children: const [
-              CartTile(),
-              CartTile(),
-              CartTile()
-            ],
-          ),
-        )
-      ),
+          appBar: topBar('My Cart'),
+          body: Container(
+            padding: const EdgeInsets.all(10),
+            child: ListView(
+              shrinkWrap: true,
+              children: const [CartTile(), CartTile(), CartTile()],
+            ),
+          )),
     );
   }
 }

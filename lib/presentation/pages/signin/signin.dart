@@ -15,8 +15,8 @@ import '../main/main.dart';
 class Signin extends StatelessWidget {
   final bool isRegisteredSuccess;
   Signin({super.key, this.isRegisteredSuccess = false});
-  final TextEditingController emailController = TextEditingController();
-  final TextEditingController passwordController = TextEditingController();
+  final TextEditingController emailController = TextEditingController(text:'nehal@email.com');
+  final TextEditingController passwordController = TextEditingController(text:'123456');
   @override
   Widget build(BuildContext context) {
     double width = MediaQuery.of(context).size.width;
@@ -129,11 +129,11 @@ class Signin extends StatelessWidget {
                     final saveStatus =
                         context.read<SaveLoginBloc>().state.saveLoginStatus;
                     if (saveStatus == SaveLoginStatus.save) {
-                      if(emailController.text.isNotEmpty){
-                        SharedPreferences prefs =
-                          await SharedPreferences.getInstance();
-                      prefs.setString("email", emailController.text);
-                      }
+                         print('token before shared pref ${AuthService.token}');
+                       
+                         SharedPreferences prefs = await SharedPreferences.getInstance();
+        prefs.setBool("saveLogin", true);
+                    
                     }
                   },
                   child: BlocListener<LoginBloc, LoginState>(
@@ -148,7 +148,7 @@ class Signin extends StatelessWidget {
                         ScaffoldMessenger.of(context).showSnackBar(
                           SnackBar(
                             content: Text(
-                              AuthService.errMsg,
+                              AuthService.errMsg!,
                               style: const TextStyle(color: Colors.white),
                             ),
                           ),
